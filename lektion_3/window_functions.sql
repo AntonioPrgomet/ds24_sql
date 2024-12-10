@@ -14,7 +14,6 @@ SELECT
 FROM
     Products;
 
-
 -- ORDER BY
 -- By default, if ORDER BY is supplied then the frame consists of 
 -- all rows from the start of the partition up through the current row, 
@@ -57,10 +56,26 @@ FROM
 
 -- RANGE delar upp på värden. Läs mer på https://learnsql.com/blog/range-clause/
 
-USE AdventureWorks2022;
-GO
+-- RANK() kan också användas med OVER()
+
+SELECT
+    CategoryID,
+    ProductName,
+    Price,
+    RANK() 
+        OVER 
+            (   
+                PARTITION BY CategoryID 
+                ORDER BY Price DESC
+            ) 
+        AS PriceRankInCategory
+FROM
+    Products;
 
 -- Exempel från min egna kunskapskontroll
+
+USE AdventureWorks2022;
+GO
 
 SELECT DISTINCT A.BusinessEntityID
     ,A.Gender
